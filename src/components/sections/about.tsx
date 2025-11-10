@@ -104,7 +104,7 @@ const AboutSection = () => {
 
       <div className="mt-12 sm:mt-16 text-center">
         <p className="text-base sm:text-lg text-muted-foreground font-mono px-4">
-          Let's build something amazing together! 🚀
+          Let&apos;s build something amazing together! 🚀
         </p>
       </div>
     </section>
