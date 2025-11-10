@@ -4,9 +4,6 @@
 
 Welcome to the repository for my personal portfolio website! 🎉 This project is a culmination of creativity, technology, and my dedication to showcasing my skills, projects, and personality in a visually stunning and interactive manner.
 
-### Live preview: https://portfolio-git-main-luxaprathan.vercel.app?_vercel_share=ZFItMhpWKilvJz1LgNPLyIf6puuXt4X3
-
-![Preview](https://github.com/luxaprathan/portfolio/blob/main/public/assets/preview_video.gif?raw=true)
 
 https://github.com/luxaprathan/portfolio/blob/main/preview_video.mp4
 
