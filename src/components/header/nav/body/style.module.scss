@@ -13,10 +13,20 @@
     margin: 0px;
     display: flex;
     overflow: hidden;
-    font-size: 32px;
-    padding-right: 30px;
+    font-size: 28px;
+    padding-right: 20px;
     padding-top: 10px;
     font-weight: 350;
+    line-height: 1.2;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .body {
+    p {
+      font-size: 32px;
+      padding-right: 30px;
+    }
   }
 }
 

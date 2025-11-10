@@ -66,7 +66,7 @@ const OnlineUsers = () => {
           variant="ghost"
           className={cn(
             "p-0 m-0 mr-4 h-fit w-fit transition-opacity duration-150",
-            users.length <= 1 ? "opacity-0" : "opacity-100",
+            users.length === 0 ? "opacity-0" : "opacity-100",
           )}
         >
           <div className="relative flex flex-col gap-2">
@@ -80,7 +80,10 @@ const OnlineUsers = () => {
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent 
+        className="w-80 z-[1000]" 
+        sideOffset={10}
+      >
         <Tabs
           defaultValue="account"
           className="w-full h-[30rem] flex flex-col items-center no-hover-zone"
@@ -157,7 +160,7 @@ const OnlineUsers = () => {
                 </div>
               ))}
             </div>
-            <div className="w-full h-20 flex items-center gap-2">
+            <div className="h-20 ml-2 flex items-center gap-2">
               <Input
                 className="flex-1"
                 ref={inputRef}
@@ -220,10 +223,18 @@ const UserItem = ({
       variants={item}
     >
       <div className="flex items-center gap-2">
-        <div
-          className="w-4 h-4 rounded-full"
-          style={{ backgroundColor: user.color }}
-        ></div>
+        {user.avatar ? (
+          <img 
+            src={user.avatar} 
+            alt={user.name}
+            className="w-8 h-8 rounded-full"
+          />
+        ) : (
+          <div
+            className="w-8 h-8 rounded-full"
+            style={{ backgroundColor: user.color }}
+          ></div>
+        )}
         {isEditingName ? (
           <>
             <Input

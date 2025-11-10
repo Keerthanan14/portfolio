@@ -52,7 +52,7 @@ const RemoteCursors = () => {
   }, [x, y, isMobile]);
   const users = Array.from(_users.values());
   return (
-    <div className="h-0 z-10 relative">
+    <div className="h-0 z-10 relative hidden">
       {users
         .filter((user) => user.socketId !== socket?.id)
         .map((user) => (

@@ -13,14 +13,18 @@ const Email = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log(body);
+    console.log('Received body:', body);
     const {
       success: zodSuccess,
       data: zodData,
       error: zodError,
     } = Email.safeParse(body);
-    if (!zodSuccess)
-      return Response.json({ error: zodError?.message }, { status: 400 });
+    if (!zodSuccess) {
+      console.log('Validation error:', zodError.flatten());
+      return Response.json({ 
+        error: zodError.flatten().fieldErrors 
+      }, { status: 400 });
+    }
 
     const { data: resendData, error: resendError } = await resend.emails.send({
       from: "Porfolio <onboarding@resend.dev>",
@@ -34,9 +38,11 @@ export async function POST(req: Request) {
     });
 
     if (resendError) {
+      console.log('Resend error:', resendError);
       return Response.json({ resendError }, { status: 500 });
     }
 
+    console.log('Email sent successfully:', resendData);
     return Response.json(resendData);
   } catch (error) {
     return Response.json({ error }, { status: 500 });

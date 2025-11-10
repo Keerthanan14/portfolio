@@ -14,6 +14,7 @@ export type User = {
   socketId: string;
   name: string;
   color: string;
+  avatar?: string;
   pos: {
     x: number;
     y: number;
@@ -53,18 +54,42 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
 
   // SETUP SOCKET.IO
   useEffect(() => {
-    const username =  localStorage.getItem("username") || generateRandomCursor().name
+    let username = localStorage.getItem("username");
+    
+    // If no saved username, generate User - [random number]
+    if (!username) {
+      const randomNumber = Math.floor(Math.random() * 100) + 1;
+      username = `User - ${randomNumber}`;
+      localStorage.setItem("username", username);
+    }
+    
     const socket = io(process.env.NEXT_PUBLIC_WS_URL!, {
       query: { username },
     });
     setSocket(socket);
-    socket.on("connect", () => {});
+    
+    socket.on("connect", () => {
+      console.log("Connected to socket server:", socket.id);
+    });
+    
+    // Listen for user list updates
+    socket.on("users-update", (usersList: User[]) => {
+      const userMap = new Map<string, User>();
+      usersList.forEach(user => {
+        userMap.set(user.socketId, user);
+      });
+      setUsers(userMap);
+      console.log("Users updated:", usersList.length, "online");
+    });
+    
     socket.on("msgs-receive-init", (msgs) => {
       setMsgs(msgs);
     });
-    socket.on("msg-receive", (msgs) => {
-      setMsgs((p) => [...p, msgs]);
+    
+    socket.on("msg-receive", (msg) => {
+      setMsgs((p) => [...p, msg]);
     });
+    
     return () => {
       socket.disconnect();
     };

@@ -16,8 +16,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
+import { useLenis } from "@/lib/lenis";
 
 interface WeekDetail {
   week: string;
@@ -39,6 +39,27 @@ interface WeekDetail {
 const LearningJourneySection = () => {
   const [selectedWeek, setSelectedWeek] = useState<WeekDetail | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const lenis = useLenis();
+
+  // Prevent background scroll when modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      // Stop Lenis smooth scroll
+      lenis?.stop();
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Resume Lenis smooth scroll
+      lenis?.start();
+      // Allow body scroll
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      lenis?.start();
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, lenis]);
 
   const learningItems: WeekDetail[] = [
     {
@@ -471,11 +492,11 @@ const LearningJourneySection = () => {
   };
 
   return (
-    <section id="learning-journey" className="min-h-screen max-w-7xl mx-auto py-20 px-4">
+    <section id="learning-journey" className="min-h-screen max-w-7xl mx-auto py-12 sm:py-20 px-4 sm:px-6">
       <Link href={"#learning-journey"}>
         <h2
           className={cn(
-            "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16 mb-20",
+            "bg-clip-text text-3xl sm:text-4xl text-center text-transparent md:text-7xl pt-8 sm:pt-16 mb-12 sm:mb-20 relative z-10",
             "bg-gradient-to-b from-black/80 to-black/50",
             "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50"
           )}
@@ -488,10 +509,10 @@ const LearningJourneySection = () => {
       {/* Timeline Container */}
       <div className="relative max-w-6xl mx-auto">
         {/* Vertical Timeline Line */}
-        <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 transform md:-translate-x-1/2" />
+        <div className="absolute left-6 sm:left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 transform md:-translate-x-1/2" />
         
         {/* Timeline Items */}
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           {learningItems.map((item, index) => {
             const isEven = index % 2 === 0;
             return (
@@ -504,8 +525,8 @@ const LearningJourneySection = () => {
                 )}
               >
                 {/* Timeline Node */}
-                <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 dark:bg-primary/30 backdrop-blur-sm border-4 border-background flex items-center justify-center shadow-lg">
+                <div className="absolute left-6 sm:left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/20 dark:bg-primary/30 backdrop-blur-sm border-4 border-background flex items-center justify-center shadow-lg">
                     <span className="text-xs font-bold text-primary">
                       {index + 1}
                     </span>
@@ -517,7 +538,7 @@ const LearningJourneySection = () => {
 
                 {/* Content Card */}
                 <div className={cn(
-                  "ml-20 md:ml-0 md:w-1/2",
+                  "ml-16 sm:ml-20 md:ml-0 md:w-1/2",
                   "group cursor-pointer"
                 )}
                   onClick={() => handleCardClick(item)}
@@ -530,9 +551,9 @@ const LearningJourneySection = () => {
                       "border-2 border-transparent hover:border-primary/30"
                     )}
                   >
-                    <CardHeader>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs font-mono text-primary bg-primary/10 px-3 py-1 rounded-full">
+                    <CardHeader className="pb-3 sm:pb-6">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <span className="text-xs font-mono text-primary bg-primary/10 px-2 sm:px-3 py-1 rounded-full">
                           {item.week}
                         </span>
                         {item.hasImages && (
@@ -541,25 +562,25 @@ const LearningJourneySection = () => {
                           </span>
                         )}
                       </div>
-                      <CardTitle className="text-2xl group-hover:text-primary transition-colors">
+                      <CardTitle className="text-xl sm:text-2xl group-hover:text-primary transition-colors">
                         {item.title}
                       </CardTitle>
-                      <CardDescription className="text-base mt-2">
+                      <CardDescription className="text-sm sm:text-base mt-2">
                         {item.description}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2">
+                    <CardContent className="pt-0">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {item.skills.map((skill, idx) => (
                           <span
                             key={idx}
-                            className="px-3 py-1 text-xs font-mono rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors cursor-default"
+                            className="px-2 sm:px-3 py-1 text-xs font-mono rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors cursor-default"
                           >
                             {skill}
                           </span>
                         ))}
                       </div>
-                      <p className="mt-4 text-sm text-muted-foreground">
+                      <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-muted-foreground">
                         Click to view full details →
                       </p>
                     </CardContent>
@@ -571,32 +592,40 @@ const LearningJourneySection = () => {
         </div>
       </div>
 
-      <div className="mt-20 text-center">
-        <p className="text-lg text-muted-foreground font-mono">
+      <div className="mt-12 sm:mt-20 text-center">
+        <p className="text-base sm:text-lg text-muted-foreground font-mono px-4">
           11 Weeks of Professional Development & Growth 🚀
         </p>
       </div>
 
       {/* Modal Dialog */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] bg-white/95 dark:bg-black/95 backdrop-blur-md">
+      <Dialog open={isOpen} onOpenChange={setIsOpen} modal={true}>
+        <DialogContent className="mt-[30px] md:mt-0 max-w-[95vw] sm:max-w-4xl max-h-[90vh] bg-white/95 dark:bg-black/95 backdrop-blur-md overflow-hidden" data-lenis-prevent>
           <DialogHeader>
-            <DialogTitle className="text-3xl flex items-center gap-3">
+            <DialogTitle className="text-xl sm:text-3xl flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
               <span className="text-primary">{selectedWeek?.week}</span>
               <span>{selectedWeek?.title}</span>
             </DialogTitle>
-            <DialogDescription className="text-base">
+            <DialogDescription className="text-sm sm:text-base">
               {selectedWeek?.description}
             </DialogDescription>
           </DialogHeader>
           
-          <ScrollArea className="h-[60vh] pr-4">
+          <div 
+            className="h-[60vh] overflow-y-auto overflow-x-hidden pr-2 sm:pr-4"
+            data-lenis-prevent
+            style={{
+              scrollBehavior: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              overscrollBehavior: 'contain'
+            }}
+          >
             <div className="space-y-6">
               {/* Images Section */}
               {selectedWeek?.hasImages && selectedWeek.images && (
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold">Learning Materials</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <h3 className="text-lg sm:text-xl font-semibold">Learning Materials</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {selectedWeek.images.map((img, idx) => (
                       <div key={idx} className="relative aspect-video rounded-lg overflow-hidden border-2 border-primary/20">
                         <Image
@@ -614,10 +643,10 @@ const LearningJourneySection = () => {
               {/* Key Points */}
               {selectedWeek?.fullContent.keyPoints && (
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-primary">Key Points</h3>
-                  <ul className="space-y-2 list-disc list-inside">
+                  <h3 className="text-lg sm:text-xl font-semibold text-primary">Key Points</h3>
+                  <ul className="space-y-2 list-disc list-inside pl-1">
                     {selectedWeek.fullContent.keyPoints.map((point, idx) => (
-                      <li key={idx} className="text-base leading-relaxed">
+                      <li key={idx} className="text-sm sm:text-base leading-relaxed">
                         {point}
                       </li>
                     ))}
@@ -630,10 +659,10 @@ const LearningJourneySection = () => {
                 <div className="space-y-4">
                   {selectedWeek.fullContent.sections.map((section, idx) => (
                     <div key={idx} className="space-y-2">
-                      <h3 className="text-lg font-semibold text-primary">
+                      <h3 className="text-base sm:text-lg font-semibold text-primary">
                         {section.heading}
                       </h3>
-                      <p className="text-base leading-relaxed text-muted-foreground">
+                      <p className="text-sm sm:text-base leading-relaxed text-muted-foreground">
                         {section.content}
                       </p>
                     </div>
@@ -643,11 +672,11 @@ const LearningJourneySection = () => {
 
               {/* Key Takeaways */}
               {selectedWeek?.fullContent.keyTakeaways && (
-                <div className="space-y-3 bg-primary/5 p-4 rounded-lg">
-                  <h3 className="text-xl font-semibold text-primary">Key Takeaways</h3>
-                  <ul className="space-y-2 list-disc list-inside">
+                <div className="space-y-3 bg-primary/5 p-3 sm:p-4 rounded-lg">
+                  <h3 className="text-lg sm:text-xl font-semibold text-primary">Key Takeaways</h3>
+                  <ul className="space-y-2 list-disc list-inside pl-1">
                     {selectedWeek.fullContent.keyTakeaways.map((takeaway, idx) => (
-                      <li key={idx} className="text-base leading-relaxed">
+                      <li key={idx} className="text-sm sm:text-base leading-relaxed">
                         {takeaway}
                       </li>
                     ))}
@@ -657,12 +686,12 @@ const LearningJourneySection = () => {
 
               {/* Skills */}
               <div className="space-y-3">
-                <h3 className="text-xl font-semibold">Skills Developed</h3>
+                <h3 className="text-lg sm:text-xl font-semibold">Skills Developed</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedWeek?.skills.map((skill, idx) => (
                     <span
                       key={idx}
-                      className="px-4 py-2 text-sm font-mono rounded-full bg-primary/20 text-primary"
+                      className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-mono rounded-full bg-primary/20 text-primary"
                     >
                       {skill}
                     </span>
@@ -670,7 +699,7 @@ const LearningJourneySection = () => {
                 </div>
               </div>
             </div>
-          </ScrollArea>
+          </div>
         </DialogContent>
       </Dialog>
     </section>

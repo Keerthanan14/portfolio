@@ -18,6 +18,7 @@ const NyanCat = () => {
       id: string;
     }[]
   >([]);
+  const [lastTap, setLastTap] = useState(0);
 
   const spawnDiv = () => {
     const newDiv = {
@@ -30,9 +31,23 @@ const NyanCat = () => {
       if (e.key === "n") spawnDiv();
     };
 
+    const handleTouch = (e: TouchEvent) => {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      
+      // Double tap detected (within 300ms)
+      if (tapLength < 300 && tapLength > 0) {
+        spawnDiv();
+      }
+      
+      setLastTap(currentTime);
+    };
+
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("touchstart", handleTouch);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("touchstart", handleTouch);
     };
   });
 
@@ -73,7 +88,7 @@ const AnimatedDiv = ({
 
   React.useEffect(() => {
     controls.start({
-      x: "100vw",
+      x: "-20vw",
       y: randY,
       transition: { duration: 5, ease: "linear" },
     });
@@ -86,7 +101,7 @@ const AnimatedDiv = ({
   return (
     <motion.div
       key={id}
-      initial={{ x: "-20vw", y: randY }}
+      initial={{ x: "100vw", y: randY }}
       animate={controls}
       onAnimationComplete={onCompleted}
       onClick={handlePause}

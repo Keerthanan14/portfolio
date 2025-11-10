@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/tooltip";
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
-import ScrollDownIcon from "../scroll-down-icon";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { config } from "@/data/config";
 
@@ -22,10 +21,10 @@ const HeroSection = () => {
       <div className="grid md:grid-cols-2">
         <div
           className={cn(
-            "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+            "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-10",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-28 sm:pt-0 sm:pb-32 md:p-24 lg:p-40 xl:p-48"
+            "pt-32 px-4 sm:pt-0 sm:pb-32 md:p-24 lg:p-40 xl:p-48"
           )}
         >
           {!isLoading && (
@@ -47,8 +46,8 @@ const HeroSection = () => {
                     <TooltipTrigger asChild>
                       <h1
                         className={cn(
-                          "font-thin text-6xl text-transparent text-slate-800 text-left",
-                          "cursor-default text-edge-outline font-display sm:text-6xl md:text-7xl "
+                          "font-thin text-5xl sm:text-6xl md:text-7xl text-transparent text-slate-800 text-left",
+                          "cursor-default text-edge-outline font-display"
                         )}
                       >
                         {config.author.split(" ")[0]}
@@ -133,9 +132,6 @@ const HeroSection = () => {
           )}
         </div>
         <div className="grid col-span-1"></div>
-      </div>
-      <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
-        <ScrollDownIcon />
       </div>
     </section>
   );

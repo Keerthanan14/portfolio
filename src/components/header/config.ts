@@ -7,11 +7,6 @@ const links: Link[] = [
     thumbnail: '/assets/nav-link-previews/landing.png'
   },
   {
-    title: 'About',
-    href: '/#about',
-    thumbnail: '/assets/nav-link-previews/about.png'
-  },
-  {
     title: 'Skills',
     href: '/#skills',
     thumbnail: '/assets/nav-link-previews/skills.png'
@@ -21,25 +16,25 @@ const links: Link[] = [
     href: '/#projects',
     thumbnail: '/assets/nav-link-previews/projects.png'
   },
-  // {
-  //   title: 'Skills',
-  //   href: '/skills',
-  //   thumbnail: '/assets/nav-link-previews/skills.png'
-  // },
-  // {
-  //   title: 'Testimonials',
-  //   href: '/testimonials',
-  //   thumbnail: '/assets/nav-link-previews/testimonials.png'
-  // },
-  // {
-  //   title: 'Blogs',
-  //   href: '/blogs',
-  //   thumbnail: '/assets/nav-link-previews/blog.png',
-  // },
+  {
+    title: 'About',
+    href: '/#about',
+    thumbnail: '/assets/nav-link-previews/landing.png'
+  },
+  {
+    title: 'Education',
+    href: '/#education',
+    thumbnail: '/assets/nav-link-previews/landing.png'
+  },
+  {
+    title: 'Experience',
+    href: '/#experience',
+    thumbnail: '/assets/nav-link-previews/landing.png'
+  },
   {
     title: 'Learning Journey',
     href: '/#learning-journey',
-    thumbnail: '/assets/nav-link-previews/contact.png'
+    thumbnail: '/assets/nav-link-previews/learningjourney.png'
   },
   {
     title: 'Contact',

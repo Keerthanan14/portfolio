@@ -29,7 +29,7 @@ const config = {
     "Azure",
   ],
   author: "Luxaprathan Nagaselvam",
-  email: "luxluxprathan2003@gmail.com",
+  email: "luxluxaprathan2003@gmail.com",
   site: "https://luxprathan.com",
 
   get ogImg() {

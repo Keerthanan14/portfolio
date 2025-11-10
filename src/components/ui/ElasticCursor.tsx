@@ -196,11 +196,11 @@ function ElasticCursor() {
         id={"jelly-id"}
         className={cn(
           `w-[${CURSOR_DIAMETER}px] h-[${CURSOR_DIAMETER}px] border-2 border-black dark:border-white`,
-          "jelly-blob fixed left-0 top-0 rounded-lg z-[999] pointer-events-none will-change-transform",
+          "jelly-blob fixed left-0 top-0 rounded-lg pointer-events-none will-change-transform",
           "translate-x-[-50%] translate-y-[-50%]"
         )}
         style={{
-          zIndex: 100,
+          zIndex: 10000,
           backdropFilter: "invert(100%)",
         }}
       ></div>
@@ -209,6 +209,7 @@ function ElasticCursor() {
         style={{
           top: y,
           left: x,
+          zIndex: 10000,
           backdropFilter: "invert(100%)",
         }}
       ></div>

@@ -1,5 +1,5 @@
 .header {
-  z-index: 9;
+  z-index: 999;
   // background-color: hsl(var(--background) / .8);
   position: fixed;
   width: 100%;
@@ -15,6 +15,7 @@
     position: absolute;
     left: 0;
     top: 100%;
+    z-index: 998;
   }
 
   .bar {

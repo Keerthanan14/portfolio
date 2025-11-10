@@ -7,6 +7,9 @@ import AnimatedBackground from "@/components/animated-background";
 import SkillsSection from "@/components/sections/skills";
 import ProjectsSection from "@/components/sections/projects";
 import ContactSection from "@/components/sections/contact";
+import AboutSection from "@/components/sections/about";
+import EducationSection from "@/components/sections/education";
+import ExperienceSection from "@/components/sections/experience";
 import HeroSection from "@/components/sections/hero";
 import LearningJourneySection from "@/components/sections/learning-journey";
 
@@ -22,6 +25,9 @@ function MainPage() {
           <SkillsSection />
           <ProjectsSection />
           <ContactSection />
+          <AboutSection />
+          <EducationSection />
+          <ExperienceSection />
           <LearningJourneySection />
         </main>
       </SmoothScroll>

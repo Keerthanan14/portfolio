@@ -34,7 +34,21 @@ const ContactForm = () => {
         }),
       });
       const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      console.log('Response:', data);
+      if (!res.ok || data.error || data.resendError) {
+        // Format validation errors if they exist
+        let errorMessage = 'Something went wrong! Please check the fields.';
+        if (data.error) {
+          const errors = data.error;
+          const errorMessages = Object.entries(errors)
+            .map(([field, messages]) => `${field}: ${(messages as string[]).join(', ')}`)
+            .join('\n');
+          if (errorMessages) errorMessage = errorMessages;
+        } else if (data.resendError) {
+          errorMessage = `Email service error: ${data.resendError.message || JSON.stringify(data.resendError)}`;
+        }
+        throw new Error(errorMessage);
+      }
       toast({
         title: "Thank you!",
         description: "I'll get back to you as soon as possible.",
@@ -50,9 +64,10 @@ const ContactForm = () => {
         clearTimeout(timer);
       }, 1000);
     } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong! Please check the fields.';
       toast({
         title: "Error",
-        description: "Something went wrong! Please check the fields.",
+        description: errorMessage,
         className: cn(
           "top-0 w-full flex justify-center fixed md:max-w-7xl md:top-4 md:right-4"
         ),
